@@ -46,11 +46,13 @@ class Registro {
                   FROM ' . $this->table . ' a
                   LEFT JOIN empleados e ON a.empleado_id = e.id
                   ORDER BY a.fecha_hora DESC';
-        
+        try {
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        
-        return $stmt;
-    }
+        return $stmt;// Retorna el objeto PDOStatement
+        } catch (PDOException $e){
+            echo "Error en la consulta: " . $e->getMessage();
+            return null;
+        }
 }
-?>
+}
